@@ -1,0 +1,16 @@
+{
+  "name": "figma-plugin-webshot",
+  "version": "1.0.0",
+  "description": "A small Figma plugin for snapping full-page web screenshots, handy for research",
+  "main": "code.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "watch": "npm run build -- --watch"
+  },
+  "author": "",
+  "license": "",
+  "devDependencies": {
+    "@figma/plugin-typings": "1.80.0",
+    "typescript": "5.2.2"
+  }
+}

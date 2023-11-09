@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com?plugins=typography,aspect-ratio,line-clamp"></script>
+  </head>
+  <body>
+    <section class="p-4 space-y-4">
+      <h2 class="text-4xl text-center">Webshot 📸</h2>
+      <form id="create" class="space-y-4">
+        <input
+          class="block w-full border-2 border-gray-950 rounded-[6px] text-[16px] h-[50px] px-4"
+          id="url"
+          placeholder="https://google.com"
+          type="url"
+          required
+        />
+
+        <!-- TODO: Use CSS Variables https://www.figma.com/plugin-docs/css-variables/ -->
+        <button
+          type="submit"
+          class="bg-gray-950 text-white w-full rounded-[8px] font-bold h-[48px]"
+        >
+          Capture
+        </button>
+      </form>
+    </section>
+
+    <script>
+      document.getElementById('create').onsubmit = async (e) => {
+        e.preventDefault();
+        const textbox = document.getElementById('url');
+        const url = textbox.value;
+
+        const res = await fetch(
+          'https://webshot-service.vercel.app?' +
+            new URLSearchParams({
+              url,
+            }),
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+
+        const blob = await res.blob();
+        const img = new Uint8Array(await blob.arrayBuffer());
+
+        parent.postMessage({ pluginMessage: { img } }, '*');
+      };
+    </script>
+  </body>
+</html>
